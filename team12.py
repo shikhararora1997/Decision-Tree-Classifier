@@ -23,7 +23,10 @@ print(df['Competitive?'].value_counts())
 
 # Data pre-processing
 
+df['Duration'] = df['Duration'].astype('category')
+
 df_dumies = pd.get_dummies(df)
+
 print("After converting all the categorical columns to dummy variables, the shape of our dataframe is ", df_dumies.shape)
 
 # Splitting data into training and testing data
