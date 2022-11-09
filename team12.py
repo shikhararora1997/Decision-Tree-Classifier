@@ -1,5 +1,13 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from six import StringIO
+from sklearn.tree import export_graphviz
+from sklearn import tree
+import pydotplus
+import graphviz
+from sklearn.metrics import accuracy_score
+
 
 # Reading the file
 
@@ -25,7 +33,32 @@ y = df_dumies['Competitive?']
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.4, random_state=1)
 
+# Fitting the first tree with all predictors with no restrictions on the number of nodes in the leaf
 
-# Decision trees are a non-paramatric supervised learning method and require a pre-classified target variable. A training data must be supplied
-# which provides the algorithm with the values of the target variable. Therefore it's a great sign that our data does not have any missing data
-# We will be using C4.5 as our algorithm because unlike the CART algorithm C4.5 is not limited to just binary splits
+clf = DecisionTreeClassifier(random_state=1)
+clf = clf.fit(X_train, y_train)
+
+# Fitting the first tree with all predictors with a limit of 50 to the number of nodes in the leaf
+
+clf50 = DecisionTreeClassifier(random_state=1, min_samples_split=50)
+clf50 = clf50.fit(X_train, y_train)
+X_cols = list(X.columns.values)
+
+# Getting the dot_data the decision tree with no limit at the leaf node
+
+export_graphviz(clf, out_file='dot_files/fullClassTree.dot',
+                feature_names=X_train.columns)
+
+# Plotting the decision tree with a limit of 50 leaf nodes
+
+export_graphviz(clf50, out_file='dot_files/treewith50nodes.dot',
+                feature_names=X_train.columns)
+
+# Measuring Accuracy
+
+y_predicted = clf.predict(X_test)
+y_predicted_50 = clf50.predict(X_test)
+print("The test accuracy for the decision tree with no restrictions is ")
+print((accuracy_score(y_test, y_predicted)))
+print("The test accuracy for the decision tree with the restriction of 50 nodes at the leaf is ")
+print((accuracy_score(y_test, y_predicted_50)))
