@@ -66,6 +66,9 @@ print((accuracy_score(y_test, y_predicted)))
 print("The test accuracy for the decision tree with the restriction of 50 nodes at the leaf is ")
 print((accuracy_score(y_test, y_predicted_50)))
 
+print(clf50.tree_.max_depth)
+print(clf50.tree_.node_count)
+
 
 # Reducing the predictors
 
@@ -88,5 +91,8 @@ export_graphviz(clf_3, out_file='dot_files/thirdclassifier.dot',
                 feature_names=X_train.columns)
 
 y_predicted_3 = clf_3.predict(X_test)
-print("The test accuracy for the decision tree with no restrictions is ")
+print("The test accuracy for the third decision tree is ")
 print((accuracy_score(y_test, y_predicted_3)))
+
+print(clf_3.tree_.max_depth)
+print(clf_3.tree_.node_count)
