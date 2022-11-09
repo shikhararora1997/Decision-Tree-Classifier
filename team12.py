@@ -36,21 +36,17 @@ y = df_dumies['Competitive?']
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.4, random_state=1)
 
-# Fitting the first tree with all predictors with no restrictions on the number of nodes in the leaf
-
-clf = DecisionTreeClassifier(random_state=1)
-clf = clf.fit(X_train, y_train)
-
 # Fitting the first tree with all predictors with a limit of 50 to the number of nodes in the leaf
 
 clf50 = DecisionTreeClassifier(random_state=1, min_samples_split=50)
 clf50 = clf50.fit(X_train, y_train)
 X_cols = list(X.columns.values)
 
-# Getting the dot_data the decision tree with no limit at the leaf node
+print("The depth of the classifier tree is ")
+print(clf50.tree_.max_depth)
+print("The number of nodes in the classifier tree")
+print(clf50.tree_.node_count)
 
-export_graphviz(clf, out_file='dot_files/fullClassTree.dot',
-                feature_names=X_train.columns)
 
 # Plotting the decision tree with a limit of 50 leaf nodes
 
@@ -59,16 +55,9 @@ export_graphviz(clf50, out_file='dot_files/treewith50nodes.dot',
 
 # Measuring Accuracy
 
-y_predicted = clf.predict(X_test)
-y_predicted_50 = clf50.predict(X_test)
+y_predicted = clf50.predict(X_test)
 print("The test accuracy for the decision tree with no restrictions is ")
 print((accuracy_score(y_test, y_predicted)))
-print("The test accuracy for the decision tree with the restriction of 50 nodes at the leaf is ")
-print((accuracy_score(y_test, y_predicted_50)))
-
-print(clf50.tree_.max_depth)
-print(clf50.tree_.node_count)
-
 
 # Reducing the predictors
 
@@ -86,13 +75,15 @@ X_train, X_test, y_train, y_test = train_test_split(
 clf_3 = DecisionTreeClassifier(random_state=1, min_samples_split=50)
 clf_3 = clf_3.fit(X_train, y_train)
 
+print("The depth of the classifier tree is ")
+print(clf_3.tree_.max_depth)
+print("The number of nodes in the classifier tree")
+print(clf_3.tree_.node_count)
+
 
 export_graphviz(clf_3, out_file='dot_files/thirdclassifier.dot',
                 feature_names=X_train.columns)
 
 y_predicted_3 = clf_3.predict(X_test)
-print("The test accuracy for the third decision tree is ")
+print("The test accuracy for the second decision tree after removing a few predictors ")
 print((accuracy_score(y_test, y_predicted_3)))
-
-print(clf_3.tree_.max_depth)
-print(clf_3.tree_.node_count)
