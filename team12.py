@@ -11,8 +11,13 @@ from sklearn.metrics import accuracy_score
 
 # Reading the file
 
+
 xls = pd.ExcelFile("ebayAuctions.xlsx")
 df = pd.read_excel(xls, 'eBay auctions')
+
+
+# Hawa's department EDA
+
 
 # Basic EDA before data-processing
 
@@ -59,6 +64,9 @@ y_predicted = clf50.predict(X_test)
 print("The test accuracy for the decision tree with no restrictions is ")
 print((accuracy_score(y_test, y_predicted)))
 
+
+# Add Confusion matrix - Hawa
+
 # Reducing the predictors
 
 # Since we do not have a way of knowing what is the selling price of the product and the duration of the auction, it does not make
@@ -87,3 +95,10 @@ export_graphviz(clf_3, out_file='dot_files/thirdclassifier.dot',
 y_predicted_3 = clf_3.predict(X_test)
 print("The test accuracy for the second decision tree after removing a few predictors ")
 print((accuracy_score(y_test, y_predicted_3)))
+
+# Add Confusion matrix - Hawa
+
+# Grid Search - Jack
+
+
+# Scatter plot - Sophie
