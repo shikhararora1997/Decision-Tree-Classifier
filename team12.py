@@ -80,7 +80,7 @@ y = df_dumies['Competitive?']
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.4, random_state=1)
 
-clf_3 = DecisionTreeClassifier(random_state=1)
+clf_3 = DecisionTreeClassifier(random_state=1, min_samples_split=50)
 clf_3 = clf_3.fit(X_train, y_train)
 
 
